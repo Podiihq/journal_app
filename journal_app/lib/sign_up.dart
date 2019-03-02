@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:journal_app/home_page.dart';
 
 class SignupPage extends StatefulWidget {
   static String tag = 'login-page';
@@ -48,7 +48,7 @@ class _SignupPageState extends State<SignupPage> {
           borderRadius: BorderRadius.circular(24),
         ),
          onPressed: () {
-          Navigator.of(context).pushNamed(SignupPage.tag);
+          Navigator.of(context).pushNamed(HomePage.tag);
         },
         padding: EdgeInsets.all(12),
         color: Colors.purpleAccent,

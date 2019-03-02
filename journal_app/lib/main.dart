@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'sign_up.dart';
+import 'home_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -7,6 +8,7 @@ class MyApp extends StatelessWidget {
  
  final routes = <String, WidgetBuilder>{
    SignupPage.tag: (context) => SignupPage(),
+   HomePage.tag: (context) => HomePage(),
  };
 
 
