@@ -19,8 +19,6 @@ class _SignInPageState extends State<SignInPage> {
       child: Text("JA", style: TextStyle(fontSize: 85, fontFamily: 'Roboto', ),),
       radius: 80.0,
 
-
-
     );
 
     final email =TextFormField(
@@ -40,7 +38,6 @@ class _SignInPageState extends State<SignInPage> {
       obscureText: true,
       decoration: InputDecoration(
         labelText: 'Password',
-
 
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0))
       ),
