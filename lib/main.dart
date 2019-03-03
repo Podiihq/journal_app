@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.purple,
       ),
       //Sign up page is first fired up, will change once homepage is placed
-      home: SignUpNewUser(),
+      home: HomePage(),
       routes: routes,
     );
   }

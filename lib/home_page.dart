@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:journal_app/auth/sign_up.dart';
 
 
+class HomePage extends StatefulWidget {
+  static String tag = 'home-page';
 
-class HomePage extends StatelessWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _HomePageState();
+}
+}
+
+
+class _HomePageState extends State {
   static String tag = 'home-page';
 
   @override
   Widget build(BuildContext context) {
-    final alucard = Hero(
-      tag: 'hero',
-      child:Padding(
-        padding: EdgeInsets.all(16.0),
-        child: CircleAvatar(
-          radius: 72.0,
-          backgroundColor: Colors.transparent,
-          backgroundImage: AssetImage('assets/logo.png'),
-        ),
-      ),
-    );
 
     final welcome = Padding(
       padding: EdgeInsets.all(8.0),
       child: Text(
-          'Welcome Infinical',
+          'A simple journal app',
           style: TextStyle(fontSize: 28.0,color: Colors.white),
       ),
     );
@@ -30,10 +29,28 @@ class HomePage extends StatelessWidget {
     final lorem =Padding(
       padding: EdgeInsets.all(8.0),
       child: Text(
-        'Welcome Infinical.Thankyou for building your first app using Flutter',
+        'Kindly Signup or Signin',
         style:TextStyle(fontSize: 16.0, color: Colors.white),
       ),
     );
+
+    final signupButton = Padding(
+        padding: EdgeInsets.symmetric(vertical: 15.0),
+        child: RaisedButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          onPressed: () {
+            Navigator.of(context).pushNamed(SignUpNewUser.tag);
+          },
+          padding: EdgeInsets.all(12),
+          color: Colors.purpleAccent,
+          child: Text(
+            'Sign Up',
+            style: TextStyle(color: Colors.white),
+          ),
+        ));
+
 
     final body =Container(
       width: MediaQuery.of(context).size.width,
@@ -45,7 +62,7 @@ class HomePage extends StatelessWidget {
         ]),
         ),
         child:Column(
-          children: <Widget>[alucard,welcome,lorem],
+          children: <Widget>[welcome,lorem,signupButton],
         ),
       
     );
