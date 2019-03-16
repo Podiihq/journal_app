@@ -14,7 +14,7 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     final logo = CircleAvatar(
-      backgroundColor: Colors.cyanAccent,
+      backgroundColor: Theme.of(context).primaryColorLight,
       child: Text(
         "JA",
         style: TextStyle(
@@ -50,7 +50,7 @@ class _SignInPageState extends State<SignInPage> {
             borderRadius: BorderRadius.circular(15),
           ),
           onPressed: () {
-            Navigator.of(context).pushNamed(HomePage.tag);
+            Navigator.of(context).pushNamed(JournalsList.tag);
           },
           padding: EdgeInsets.all(12),
           color: Colors.purpleAccent,
