@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   final routes = <String, WidgetBuilder>{
     SignInPage.tag: (context) => SignInPage(),
     SignUpNewUser.tag: (context) => SignUpNewUser(),
-    HomePage.tag: (context) => HomePage(),
+    JournalsList.tag: (context) => JournalsList(),
   };
 
   @override
@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.purple,
+
       ),
       //Sign up page is first fired up, will change once homepage is placed
       home: SignUpNewUser(),
