@@ -14,7 +14,7 @@ class _SignUpNewUserState extends State<SignUpNewUser> {
   @override
   Widget build(BuildContext context) {
     final logo = CircleAvatar(
-      backgroundColor: Colors.cyanAccent,
+      backgroundColor: Theme.of(context).primaryColorLight,
       child: Text(
         "JA",
         style: TextStyle(
@@ -68,10 +68,10 @@ class _SignUpNewUserState extends State<SignUpNewUser> {
             borderRadius: BorderRadius.circular(15),
           ),
           onPressed: () {
-            Navigator.of(context).pushNamed(HomePage.tag);
+            Navigator.of(context).pushNamed(JournalsList.tag);
           },
           padding: EdgeInsets.all(12),
-          color: Colors.purpleAccent,
+          color: Theme.of(context).accentColor,
           child: Text(
             'Sign Up',
             style: TextStyle(color: Colors.white),
