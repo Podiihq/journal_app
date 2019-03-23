@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
 
       ),
       //Sign up page is first fired up, will change once homepage is placed
-      home: SignUpNewUser(),
+      home: SignInPage(),
       routes: routes,
     );
   }
