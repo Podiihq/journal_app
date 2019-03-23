@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:journal_app/home_page.dart';
+import './sign_up.dart';
 
 class SignInPage extends StatefulWidget {
-  static String tag = 'signup-page';
+  static String tag = 'sign-in-page';
 
   @override
   State<StatefulWidget> createState() {
@@ -60,6 +61,23 @@ class _SignInPageState extends State<SignInPage> {
           ),
         ));
 
+    final signUpLead =  Padding(
+        padding: EdgeInsets.symmetric(vertical: 20.0),
+        child: FlatButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          onPressed: () {
+            Navigator.of(context).pushNamed(SignUpNewUser.tag);
+          },
+          padding: EdgeInsets.all(12),
+          //color: Colors.purpleAccent,
+          child: Text(
+            'No Account ? Sign up intead',
+            style: TextStyle(color: Theme.of(context).primaryColor),
+          ),
+        ));
+
     return Scaffold(
         backgroundColor: Colors.white,
         body: Center(
@@ -73,7 +91,9 @@ class _SignInPageState extends State<SignInPage> {
               SizedBox(height: 15.0),
               password,
               SizedBox(height: 15.0),
-              signupButton
+              signupButton,
+              SizedBox(height: 15.0),
+              signUpLead
             ],
           ),
         ));
