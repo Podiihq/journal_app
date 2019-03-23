@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:journal_app/home_page.dart';
 
 class SignUpNewUser extends StatefulWidget {
-  static String tag = 'login-page';
+  static String tag = 'sign-up-page';
 
   @override
   State<StatefulWidget> createState() {
