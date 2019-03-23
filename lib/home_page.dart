@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './models/journal_crud.dart';
 
 class JournalsList extends StatefulWidget {
   static String tag = 'journalsList';
@@ -40,12 +41,16 @@ class _JournalsListState extends State<JournalsList> {
               background: Container(
                 color: Colors.red,
               ),
-              onDismissed: (DismissDirection swipedDir) {},
+              onDismissed: (DismissDirection swipedDir) {
+                setState(() {
+                  dummyJournals.remove(dummyJournals[positionOfJournal]);
+                });
+              },
               child: Column(
                 children: <Widget>[
                   ListTile(
                     leading: CircleAvatar(
-                      child: Text('J' + (noteCount = noteCount + 2).toString(), style: TextStyle(color: Colors.deepOrange, fontSize: 18.0),),
+                      child: Text(dummyJournals[positionOfJournal]['head'][0], style: TextStyle(color: Colors.deepOrange, fontSize: 18.0),),
                       backgroundColor: Theme.of(context).primaryColor,
                     ),
                     title: Text(dummyJournals[positionOfJournal]['head'], style: TextStyle(fontFamily: 'Oswald',fontSize: 17.0),),
@@ -61,7 +66,15 @@ class _JournalsListState extends State<JournalsList> {
         ),
         floatingActionButton: FloatingActionButton(
           elevation: 6.0,
-          onPressed: () {},
+          onPressed: () {
+
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (BuildContext context) {
+              return JournalCrud();
+            })).then((_) {
+
+            });
+          },
           child: Icon(Icons.edit),
           backgroundColor: Theme.of(context).primaryColor,
         ),
