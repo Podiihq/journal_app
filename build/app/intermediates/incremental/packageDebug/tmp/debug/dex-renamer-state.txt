@@ -1,4 +1,0 @@
-#Sat Mar 02 13:28:42 EAT 2019
-base.0=/home/calvo/Desktop/flutter-projects/journal_app/build/app/intermediates/transforms/dexMerger/debug/0
-path.0=classes.dex
-renamed.0=classes.dex
