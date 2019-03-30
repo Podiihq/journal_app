@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import './models/journal_crud.dart';
 import './database/db_manager.dart';
-import './models/journal_model.dart';
 
 class JournalsList extends StatefulWidget {
   static String tag = 'journalsList';
@@ -14,15 +13,6 @@ class JournalsList extends StatefulWidget {
 
 class _JournalsListState extends State<JournalsList> {
   int noteCount = 0;
-  final List<Map<String, dynamic>> dummyJournals = [
-    {'head': 'Bounced Date', 'date': '14-Feb-019', 'id': 1},
-    {'head': 'Flutter Study jam', 'date': '17-March-019', 'id': 2},
-    {'head': 'Movie previews', 'date': '21-May-018', 'id': 3},
-    {'head': 'Amazing assessment results', 'date': '16-Feb-019', 'id': 4},
-    {'head': 'Travel and adventure', 'date': '30-Dec-018', 'id': 5},
-    {'head': 'Meeting new catch', 'date': '01-Aug-017', 'id': 6},
-    {'head': 'Crazy shoping', 'date': '14-Feb-016', 'id': 7}
-  ];
 
   Widget _setFav(int position) {
     return (position % 2) == 0
@@ -63,6 +53,37 @@ class _JournalsListState extends State<JournalsList> {
         });
   }
 
+  _showWarningDialog(BuildContext context, var journal_identifier) {
+    /*
+    This simple function shows a dialogbox warning the user that proceeding would
+    result in loss of the data
+     */
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Deletion"),
+            content: Text("Sure to forget this moment?"),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("proceed"),
+                onPressed: () {
+                  var response = JournalDatabase.db.removeJournal(journal_identifier);
+                  print(response);
+                  Navigator.pop(context, true);
+                },
+              ),
+              FlatButton(
+                child: Text("cancel"),
+                onPressed: () {
+                  Navigator.pop(context, true);
+                },
+              )
+            ],
+          );
+        });
+  }
+
   paintReceivedJournals(List bunchOfJournals) {
     /*
     This function takes in a list as param and returns a
@@ -83,7 +104,8 @@ class _JournalsListState extends State<JournalsList> {
           ),
           onDismissed: (DismissDirection swipedDir) {
             setState(() {
-              // dummyJournals.remove(dummyJournals[positionOfJournal]);
+              _showWarningDialog(
+                  context, bunchOfJournals[positionOfJournal]['journal_id']);
             });
           },
           child: Column(
@@ -97,11 +119,11 @@ class _JournalsListState extends State<JournalsList> {
                   backgroundColor: Theme.of(context).primaryColor,
                 ),
                 title: Text(
-                  bunchOfJournals[positionOfJournal]['journal_entry'],
+                  bunchOfJournals[positionOfJournal]['journal_head'],
                   style: TextStyle(fontFamily: 'Oswald', fontSize: 17.0),
                 ),
                 subtitle:
-                    Text(bunchOfJournals[positionOfJournal]['journal_entry']),
+                    Text(bunchOfJournals[positionOfJournal]['journal_date'], textAlign: TextAlign.right,),
                 trailing: _setFav(noteCount = noteCount + 1),
               ),
               Divider()
