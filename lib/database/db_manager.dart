@@ -32,10 +32,10 @@ class JournalDatabase {
     //relation creator statement:
     var sql =
         "CREATE TABLE IF NOT EXISTS journals(journal_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, journal_head TEXT,"
-        " journal_entry TEXT, is_synced INTEGER, is_fav INTEGER);";
+        " journal_entry TEXT, journal_date, is_synced INTEGER, is_fav INTEGER);";
     Directory documentsInDevice = await getApplicationDocumentsDirectory();
     String path = join(documentsInDevice.path, "journal_entries.db");
-    return await openDatabase(path, version: 1, onOpen: (db) {},
+    return await openDatabase(path, version: 2, onOpen: (db) {},
         onCreate: (Database d, int version) async {
       await d.execute(sql);
     });
@@ -46,7 +46,7 @@ class JournalDatabase {
 
     var operationResults = await dataBaseRef.rawInsert(
         "INSERT INTO journals(journal_head, "
-        "journal_entry) VALUES ('${newEntry.journal_head}', '${newEntry.journal_entry}');");
+        "journal_entry, journal_date) VALUES ('${newEntry.journal_head}', '${newEntry.journal_entry}','${newEntry.journal_date}');");
 
     print("INSERTION RESULTS " + operationResults.toString());
 
@@ -58,5 +58,15 @@ class JournalDatabase {
     var forcedList = await readyDatabase.query("journals");
 
     return forcedList;
+  }
+
+  removeJournal(var journal_id) async {
+    var readyDatabase = await jdatabase;
+    var result =
+        await readyDatabase.delete("journals", where: "journal_id", whereArgs: [
+      journal_id,
+    ]);
+    print(result);
+    return result;
   }
 }
