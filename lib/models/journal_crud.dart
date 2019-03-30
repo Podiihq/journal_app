@@ -167,33 +167,45 @@ No need to validate: let the user decide - even an empty entry is ok
           journal_head: journalEntryForm['journal_head'],
           journal_entry: journalEntryForm['journal_entry'],
           journal_date: formatted.format(today),
+          journal_id: widget.journalId,
         );
+        if(widget.isEditing){
+          /*
+          Run an update if is in edit mode,
+          remember that the model is created with all the fields but the
+          db_manager client will only collect whatever is needed.
+           */
+          JournalDatabase.db.updateSingleJournal(x);
+        }else {
+          /*
+          This handles the case where the user is creating a new entry
+           */
+          JournalDatabase.db.createJournal(x);
+        }
 
-        JournalDatabase.db.createJournal(x);
-
-        Navigator.pop(context, "dont");
+        Navigator.pop(context, true);
 
         return Future.value(false);
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Create Journal'),
+          title: widget.isEditing ? Text('Refine journal') : Text('Create Journal'),
           actions: <Widget>[
             IconButton(
               onPressed: () {
-                if (widget.isEditing) {
+
                   //user discards changes...
                   Navigator.pop(context, true);
-                }
+
               },
               icon: Icon(Icons.cancel),
             ),
             IconButton(
               onPressed: () {
-                if (widget.isEditing) {
+
                   //user discards changes...
                   Navigator.pop(context, true);
-                }
+
               },
               icon: Icon(Icons.favorite_border),
             ),
