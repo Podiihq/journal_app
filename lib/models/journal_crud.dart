@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import '../database/db_manager.dart';
+import './journal_model.dart';
 
 class JournalCrud extends StatefulWidget {
   @override
@@ -66,7 +67,6 @@ class _JournalCrudState extends State<JournalCrud> {
             Build the fields necessary for display
              */
               _buildJournalTitleTextField(),
-
               _buildJournalEntryTextField(),
             ],
           ),
@@ -84,7 +84,6 @@ class _JournalCrudState extends State<JournalCrud> {
       2. 5 chars min
        */
 
-
         validator: (String titleProvided) {
           if (titleProvided.isEmpty || titleProvided.length < 5) {
             return 'Title is required, 5 characters min';
@@ -93,7 +92,9 @@ class _JournalCrudState extends State<JournalCrud> {
         onSaved: (String value) {
           journalEntryForm['journal_head'] = value;
         },
-        decoration: InputDecoration(hintText: 'Your awsome title',));
+        decoration: InputDecoration(
+          hintText: 'Your awsome title',
+        ));
   }
 
   Widget _buildJournalEntryTextField() {
@@ -107,21 +108,43 @@ No need to validate: let the user decide - even an empty entry is ok
       onSaved: (String name) {
         journalEntryForm['journal_entry'] = name;
       },
-        decoration: InputDecoration(border: InputBorder.none, hintText: 'Journal notes',),
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        hintText: 'Journal notes',
+      ),
     );
-
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Create Journal'),
-        actions: <Widget>[
-          IconButton(onPressed: (){}, icon: Icon(Icons.favorite_border),)
-        ],
+    //Initialize a waiter-gate, this will execute when the user goes back
+    return WillPopScope(
+      onWillPop: () {
+        if (!_journalFormGlobalKey.currentState.validate()) return null;
+        _journalFormGlobalKey.currentState.save();
+
+        JournalClient x = JournalClient(
+            journal_head: journalEntryForm['journal_head'],
+            journal_entry: journalEntryForm['journal_entry']);
+
+        JournalDatabase.db.createJournal(x);
+
+        Navigator.pop(context, "dont");
+
+        return Future.value(false);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Create Journal'),
+          actions: <Widget>[
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.favorite_border),
+            )
+          ],
+        ),
+        body: pageStructureContent(context),
       ),
-      body: pageStructureContent(context),
     );
   }
 }
