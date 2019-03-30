@@ -9,6 +9,7 @@ class JournalClient {
   int journal_id;
   String journal_head;
   String journal_entry;
+  String journal_date;
   bool is_synced;
   bool is_fav;
 
@@ -20,6 +21,7 @@ class JournalClient {
       {this.journal_id,
       this.journal_head,
       this.journal_entry,
+        this.journal_date,
       this.is_fav,
       this.is_synced});
 
@@ -35,6 +37,7 @@ class JournalClient {
           journal_id: json["journal_id"],
           journal_head: json["journal_head"],
           journal_entry: json["journal_entry"],
+          journal_date: json["journal_date"],
           is_fav: json["is_fav"],
           is_synced: json["is_synced"]);
 
@@ -45,6 +48,7 @@ Converts an instance to JSON format
         "journal_id": journal_id,
         "journal_head": journal_head,
         "journal_entry": journal_entry,
+    "journal_date": journal_date,
         "is_fav": is_fav,
         "is_synced": is_synced
       };
