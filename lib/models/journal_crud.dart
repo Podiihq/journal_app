@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../database/db_manager.dart';
 import './journal_model.dart';
+import 'package:intl/intl.dart';
 
 class JournalCrud extends StatefulWidget {
   @override
@@ -18,6 +19,8 @@ class _JournalCrudState extends State<JournalCrud> {
     'journal_entry': null,
     'is_fav': null,
   };
+  var today = new DateTime.now();
+  var formatted = new DateFormat("y-MMMM-d");
 
   /*
   A key is also required by a form for identification of operations specialized to the form
@@ -124,8 +127,10 @@ No need to validate: let the user decide - even an empty entry is ok
         _journalFormGlobalKey.currentState.save();
 
         JournalClient x = JournalClient(
-            journal_head: journalEntryForm['journal_head'],
-            journal_entry: journalEntryForm['journal_entry']);
+          journal_head: journalEntryForm['journal_head'],
+          journal_entry: journalEntryForm['journal_entry'],
+          journal_date: formatted.format(today),
+        );
 
         JournalDatabase.db.createJournal(x);
 
