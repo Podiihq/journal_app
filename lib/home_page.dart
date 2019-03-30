@@ -22,10 +22,18 @@ class _JournalsListState extends State<JournalsList> {
     {'head': 'Crazy shoping', 'date': '14-Feb-016', 'id': 7}
   ];
 
-
-  Widget _setFav(int position){
-    return (position%2) == 0 ? Icon(Icons.favorite_border, color: Colors.red,) : Icon(Icons.favorite, color: Colors.red,);
+  Widget _setFav(int position) {
+    return (position % 2) == 0
+        ? Icon(
+            Icons.favorite_border,
+            color: Colors.red,
+          )
+        : Icon(
+            Icons.favorite,
+            color: Colors.red,
+          );
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -40,6 +48,12 @@ class _JournalsListState extends State<JournalsList> {
               key: Key(dummyJournals[positionOfJournal]['head']),
               background: Container(
                 color: Colors.red,
+                padding: EdgeInsets.only(top: 25.0, right: 15.0),
+                child: Text(
+                  'Delete',
+                  style: TextStyle(fontWeight: FontWeight.w900, fontSize: 30.0),
+                  textAlign: TextAlign.right,
+                ),
               ),
               onDismissed: (DismissDirection swipedDir) {
                 setState(() {
@@ -50,10 +64,17 @@ class _JournalsListState extends State<JournalsList> {
                 children: <Widget>[
                   ListTile(
                     leading: CircleAvatar(
-                      child: Text(dummyJournals[positionOfJournal]['head'][0], style: TextStyle(color: Colors.deepOrange, fontSize: 18.0),),
+                      child: Text(
+                        dummyJournals[positionOfJournal]['head'][0],
+                        style:
+                            TextStyle(color: Colors.deepOrange, fontSize: 18.0),
+                      ),
                       backgroundColor: Theme.of(context).primaryColor,
                     ),
-                    title: Text(dummyJournals[positionOfJournal]['head'], style: TextStyle(fontFamily: 'Oswald',fontSize: 17.0),),
+                    title: Text(
+                      dummyJournals[positionOfJournal]['head'],
+                      style: TextStyle(fontFamily: 'Oswald', fontSize: 17.0),
+                    ),
                     subtitle: Text(dummyJournals[positionOfJournal]['date']),
                     trailing: _setFav(noteCount = noteCount + 1),
                   ),
@@ -67,13 +88,10 @@ class _JournalsListState extends State<JournalsList> {
         floatingActionButton: FloatingActionButton(
           elevation: 6.0,
           onPressed: () {
-
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (BuildContext context) {
               return JournalCrud();
-            })).then((_) {
-
-            });
+            })).then((_) {});
           },
           child: Icon(Icons.edit),
           backgroundColor: Theme.of(context).primaryColor,
