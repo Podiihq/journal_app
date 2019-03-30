@@ -62,20 +62,30 @@ class JournalDatabase {
 
   fetchSingleJournal(int idToFetch) async {
     var readyDatabase = await jdatabase;
-    var forcedList = await readyDatabase.query("journals", where: "journal_id = ?", whereArgs: [idToFetch,] );
+    var forcedList = await readyDatabase
+        .query("journals", where: "journal_id = ?", whereArgs: [
+      idToFetch,
+    ]);
 
     return forcedList;
   }
 
   removeJournal(var journal_id) async {
     var readyDatabase = await jdatabase;
-    var result =
-        await readyDatabase.delete("journals", where: "journal_id = ?", whereArgs: [
+    var result = await readyDatabase
+        .delete("journals", where: "journal_id = ?", whereArgs: [
       journal_id,
     ]);
     print(result);
     return result;
   }
 
-
+  updateSingleJournal(JournalClient journal) async {
+    var readyDatabase = await jdatabase;
+   var result =  readyDatabase.rawUpdate(
+        "UPDATE journals SET journal_head = ?, journal_entry = ? WHERE journal_id = ?",
+        [journal.journal_head, journal.journal_entry, journal.journal_id]);
+    print(result);
+   return result;
+  }
 }
