@@ -4,6 +4,11 @@ import './journal_model.dart';
 import 'package:intl/intl.dart';
 
 class JournalCrud extends StatefulWidget {
+  final String journalId;
+  final bool isEditing;
+
+  JournalCrud({this.journalId, this.isEditing});
+
   @override
   State<StatefulWidget> createState() {
     return _JournalCrudState();
@@ -143,9 +148,23 @@ No need to validate: let the user decide - even an empty entry is ok
           title: Text('Create Journal'),
           actions: <Widget>[
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                if(widget.isEditing){
+                  //user discards changes...
+                  Navigator.pop(context, true);
+                }
+              },
+              icon: Icon(Icons.cancel),
+            ),
+            IconButton(
+              onPressed: () {
+                if(widget.isEditing){
+                  //user discards changes...
+                  Navigator.pop(context, true);
+                }
+              },
               icon: Icon(Icons.favorite_border),
-            )
+            ),
           ],
         ),
         body: pageStructureContent(context),
