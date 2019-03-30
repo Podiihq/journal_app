@@ -111,7 +111,7 @@ class _JournalsListState extends State<JournalsList> {
                   //Fire the editing page when an item is tapped!
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (BuildContext context) {
-                    return JournalCrud(isEditing: true,);
+                    return JournalCrud(journalId:bunchOfJournals[positionOfJournal]['journal_id'],  isEditing: true,);
                   })).then((_) {});
                 },
                 leading: CircleAvatar(
@@ -157,7 +157,7 @@ class _JournalsListState extends State<JournalsList> {
           onPressed: () {
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (BuildContext context) {
-              return JournalCrud(journalId: "1",isEditing: false,);
+              return JournalCrud(isEditing: false,);
             })).then((_) {});
           },
           child: Icon(Icons.edit),

@@ -4,7 +4,7 @@ import './journal_model.dart';
 import 'package:intl/intl.dart';
 
 class JournalCrud extends StatefulWidget {
-  final String journalId;
+  final int journalId;
   final bool isEditing;
 
   JournalCrud({this.journalId, this.isEditing});
@@ -36,7 +36,7 @@ class _JournalCrudState extends State<JournalCrud> {
   Build the widget tree beforehand for display on the create-new-journal page
    */
 
-  Widget pageStructureContent(BuildContext context) {
+  Widget pageStructureContent(BuildContext context, String head, String entry) {
     /*
   Probe the screen size in order to provide something cool
   when painting particular widgets on the screen.
@@ -74,8 +74,8 @@ class _JournalCrudState extends State<JournalCrud> {
               /*
             Build the fields necessary for display
              */
-              _buildJournalTitleTextField(),
-              _buildJournalEntryTextField(),
+              _buildJournalTitleTextField(head),
+              _buildJournalEntryTextField(entry),
             ],
           ),
         ),
@@ -83,8 +83,39 @@ class _JournalCrudState extends State<JournalCrud> {
     );
   }
 
-  Widget _buildJournalTitleTextField() {
+  Widget buildInEditMode(int selected) {
+    //initialize the futureBuilder
+
+    return FutureBuilder(
+        future: JournalDatabase.db.fetchSingleJournal(selected),
+        /*the future param takes the guy whom we are waiting for and passes the  data
+        to AsyncSnapshot when the data arrives, also note that the
+       snapshot carries two params: 1. Information about the request and 2. the actual response
+       */
+        builder: (BuildContext context, AsyncSnapshot<dynamic> received) {
+          switch (received.connectionState) {
+            case ConnectionState.none:
+              return Text('Nothing is happening');
+            case ConnectionState.active:
+            case ConnectionState.waiting:
+              return Text('Awaiting result...');
+            case ConnectionState.done:
+              if (received.hasError) return Text('Error: ${received.error}');
+              /*
+              Once the request is successful, call the painter to put things in place.
+               */
+
+              return pageStructureContent(
+                  context,
+                  received.data[0]['journal_head'],
+                  received.data[0]['journal_entry']);
+          }
+        });
+  }
+
+  Widget _buildJournalTitleTextField(String head) {
     return TextFormField(
+        initialValue: head == null ? "" : head,
         /*
       Validator just validates
       There are only two rules here for the title:
@@ -105,8 +136,9 @@ class _JournalCrudState extends State<JournalCrud> {
         ));
   }
 
-  Widget _buildJournalEntryTextField() {
+  Widget _buildJournalEntryTextField(String entry) {
     return TextFormField(
+      initialValue: entry == null ? "" : entry,
       maxLines: 60,
       validator: (String animalName) {
 /*
@@ -149,7 +181,7 @@ No need to validate: let the user decide - even an empty entry is ok
           actions: <Widget>[
             IconButton(
               onPressed: () {
-                if(widget.isEditing){
+                if (widget.isEditing) {
                   //user discards changes...
                   Navigator.pop(context, true);
                 }
@@ -158,7 +190,7 @@ No need to validate: let the user decide - even an empty entry is ok
             ),
             IconButton(
               onPressed: () {
-                if(widget.isEditing){
+                if (widget.isEditing) {
                   //user discards changes...
                   Navigator.pop(context, true);
                 }
@@ -167,7 +199,9 @@ No need to validate: let the user decide - even an empty entry is ok
             ),
           ],
         ),
-        body: pageStructureContent(context),
+        body: widget.isEditing
+            ? buildInEditMode(widget.journalId)
+            : pageStructureContent(context, null, null),
       ),
     );
   }
