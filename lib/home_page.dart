@@ -16,11 +16,7 @@ class _JournalsListState extends State<JournalsList> {
 
   Widget _setFav(int position) {
     return (position % 2) == 0
-        ? IconButton(
-            icon: Icon(Icons.favorite_border),
-            color: Colors.red,
-            onPressed: () {},
-          )
+        ? null
         : Icon(
             Icons.favorite,
             color: Colors.red,
