@@ -13,7 +13,7 @@ class JournalClient {
   bool is_fav;
 
   /*
-  Indicate the params expected : Using {} to indicated 'named'
+  Indicate the params expected : Using {} to indicate 'named'
    */
 
   JournalClient(
