@@ -60,13 +60,22 @@ class JournalDatabase {
     return forcedList;
   }
 
+  fetchSingleJournal(int idToFetch) async {
+    var readyDatabase = await jdatabase;
+    var forcedList = await readyDatabase.query("journals", where: "journal_id = ?", whereArgs: [idToFetch,] );
+
+    return forcedList;
+  }
+
   removeJournal(var journal_id) async {
     var readyDatabase = await jdatabase;
     var result =
-        await readyDatabase.delete("journals", where: "journal_id", whereArgs: [
+        await readyDatabase.delete("journals", where: "journal_id = ?", whereArgs: [
       journal_id,
     ]);
     print(result);
     return result;
   }
+
+
 }
