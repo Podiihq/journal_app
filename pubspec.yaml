@@ -19,6 +19,7 @@ dependencies:
   cloud_firestore:  ^0.9.5
   sqflite: any
   path_provider: any
+  intl: ^0.15.8
 
 
   # The following adds the Cupertino Icons font to your application.
