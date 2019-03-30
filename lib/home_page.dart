@@ -111,6 +111,13 @@ class _JournalsListState extends State<JournalsList> {
           child: Column(
             children: <Widget>[
               ListTile(
+                onTap: (){
+                  //Fire the editing page when an item is tapped!
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (BuildContext context) {
+                    return JournalCrud(isEditing: true,);
+                  })).then((_) {});
+                },
                 leading: CircleAvatar(
                   child: Text(
                     bunchOfJournals[positionOfJournal]['journal_head'][0],
@@ -154,7 +161,7 @@ class _JournalsListState extends State<JournalsList> {
           onPressed: () {
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (BuildContext context) {
-              return JournalCrud();
+              return JournalCrud(journalId: "1",isEditing: false,);
             })).then((_) {});
           },
           child: Icon(Icons.edit),
